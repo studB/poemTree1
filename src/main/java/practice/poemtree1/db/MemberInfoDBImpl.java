@@ -18,7 +18,7 @@ public class MemberInfoDBImpl implements MemberInfoDB {
     /*
      * MemberInfoDB CREATE SQL
      * 
-     * create table memberinfo ( pid int primary key, name varchar(255), age int, favor varchar(255) )
+     * create table memberinfo ( pid varchar(255) unique, name varchar(255), age int, favor varchar(255))
      */
 
     private final JdbcTemplate jdbcTemplate;
@@ -32,11 +32,10 @@ public class MemberInfoDBImpl implements MemberInfoDB {
     public void insertRow(MemberInfo memberInfo) {
         jdbcTemplate.update("INSERT INTO MEMBERINFO (PID, NAME, AGE, FAVOR) VALUES (?,?,?,?)",
                 memberInfo.getPid(), memberInfo.getName(), memberInfo.getAge(), memberInfo.getFavor());
-
     }
 
     @Override
-    public void deleteRow(int pid) {
+    public void deleteRow(String pid) {
         jdbcTemplate.update("DELETE FROM MEMBERINFO WHERE PID = ?", pid);
     }
 
@@ -46,7 +45,7 @@ public class MemberInfoDBImpl implements MemberInfoDB {
     }
 
     @Override
-    public Optional<MemberInfo> findByPID(int pid) {
+    public Optional<MemberInfo> findByPID(String pid) {
         List<MemberInfo> result = jdbcTemplate.query("SELECT * FROM MEMBERINFO WHERE PID = ?", memberInfoRowMapper(), pid);
         return result.stream().findAny();
     }
@@ -62,11 +61,26 @@ public class MemberInfoDBImpl implements MemberInfoDB {
             @Override
             public MemberInfo mapRow(ResultSet rs, int rowNum) throws SQLException{
                 MemberInfo memberInfo = new MemberInfo();
-                memberInfo.setPid(rs.getInt("pid"));
+                memberInfo.setPid(rs.getString("pid"));
                 memberInfo.setName(rs.getString("name"));
                 memberInfo.setAge(rs.getInt("age"));
                 memberInfo.setFavor(rs.getString("favor"));
                 return memberInfo;
+            }
+        };
+    }
+
+    @Override
+    public List<String> getColumnAge() {
+        String colname = "age";
+        return jdbcTemplate.query("SELECT AGE FROM MEMBERINFO", colMapper(colname));
+    }
+
+    private RowMapper<String> colMapper(String colname){
+        return new RowMapper<String>(){
+            @Override
+            public String mapRow(ResultSet rs, int rowNum) throws SQLException{
+                return rs.getString(colname);
             }
         };
     }

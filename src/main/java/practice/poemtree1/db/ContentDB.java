@@ -17,7 +17,7 @@ public interface ContentDB {
     int updateTitle(Content content);
     int updatePoem(Content content);
 
-    List<Content> findByPID(int pid); 
+    List<Content> findByPID(String pid); 
     Optional<Content> findByTitle(String title);
 
 }

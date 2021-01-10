@@ -19,7 +19,7 @@ public class ContentDBImpl implements ContentDB {
     /*
      * ContentDB CREATE SQL
      * 
-     * create table content (pnum int unique not null, pid int, title varchar(255), poem varchar(255))
+     * create table content( pnum int auto_increment, pid varchar(255), title varchar(255), poem varchar(255))
      */
 
     private JdbcTemplate jdbcTemplate;
@@ -55,7 +55,7 @@ public class ContentDBImpl implements ContentDB {
     }
 
     @Override
-    public List<Content> findByPID(int pid) {
+    public List<Content> findByPID(String pid) {
         return jdbcTemplate.query("SELECT * FROM CONTENT WHERE PID = ?", contentRowMapper(), pid);
     }
 
@@ -71,7 +71,7 @@ public class ContentDBImpl implements ContentDB {
             public Content mapRow(ResultSet rs, int rowNum) throws SQLException{
                 Content content = new Content();
                 content.setPnum(rs.getInt("pnum"));
-                content.setPid(rs.getInt("pid"));
+                content.setPid(rs.getString("pid"));
                 content.setTitle(rs.getString("title"));
                 content.setPoem(rs.getString("poem"));
                 return content;

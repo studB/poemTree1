@@ -3,7 +3,7 @@ package practice.poemtree1.content;
 public class Content {
     
     private int pnum;
-    private int pid;
+    private String pid;
     private String title;
     private String poem;
 
@@ -15,11 +15,11 @@ public class Content {
         this.pnum = pnum;
     }
 
-    public int getPid() {
+    public String getPid() {
         return this.pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 

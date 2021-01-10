@@ -2,16 +2,16 @@ package practice.poemtree1.analysis;
 
 public class MemberInfo {
     
-    private int pid;
+    private String pid;
     private String name;
     private int age;
     private String favor;
 
-    public int getPid() {
+    public String getPid() {
         return this.pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 

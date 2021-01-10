@@ -1,5 +1,7 @@
 package practice.poemtree1.DBConntectTest;
 
+import java.util.List;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,19 +63,43 @@ public class DBTest {
         MemberInfoDB memberInfoDB = ac.getBean("memberInfoDB", MemberInfoDB.class);
 
         MemberInfo testinfo = new MemberInfo();
-        testinfo.setPid(1);
+        testinfo.setPid("1");
         testinfo.setName("testman");
         testinfo.setAge(20);
         testinfo.setFavor("poem");
 
         memberInfoDB.insertRow(testinfo);
 
-        Assertions.assertThat(memberInfoDB.findByPID(1)).isNotEmpty();
+        Assertions.assertThat(memberInfoDB.findByPID("1")).isNotEmpty();
 
-        memberInfoDB.deleteRow(1);
+        memberInfoDB.deleteRow("1");
 
         Assertions.assertThat(memberInfoDB.findByName("testman")).isEmpty();
 
+    }
+
+    @Test
+    void MemberinfoColumGet(){
+
+        MemberInfoDB memberInfoDB = ac.getBean("memberInfoDB", MemberInfoDB.class);
+
+        MemberInfo test1 = new MemberInfo();
+        test1.setPid("1");
+        test1.setName("testman");
+        test1.setAge(20);
+        test1.setFavor("poem");
+        memberInfoDB.insertRow(test1);
+
+        MemberInfo test2 = new MemberInfo();
+        test2.setPid("2");
+        test2.setName("testman2");
+        test2.setAge(30);
+        test2.setFavor("poem");
+        memberInfoDB.insertRow(test2);
+
+        List<String> result = memberInfoDB.getColumnAge();
+
+        Assertions.assertThat(result.get(0)).isEqualTo("20");
     }
 
     @Test
@@ -83,13 +109,13 @@ public class DBTest {
 
         Content content = new Content();
         content.setPnum(10);
-        content.setPid(1);
+        content.setPid("1");
         content.setTitle("title");
         content.setPoem("poem");
 
         contentDB.insertRow(content);
 
-        Assertions.assertThat(contentDB.findByPID(1)).isNotEmpty();
+        Assertions.assertThat(contentDB.findByPID("1")).isNotEmpty();
 
         contentDB.deleteRow(10);
 
