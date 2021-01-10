@@ -7,8 +7,8 @@ public interface Login {
      */
     Boolean authCheck(Member member);
 
-    void memberCreate(Member member);
+    Boolean memberCreate(Member member);
 
-    void memberDelete(Member member);
+    Boolean memberDelete(Member member);
 
 }
