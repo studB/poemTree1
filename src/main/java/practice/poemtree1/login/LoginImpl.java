@@ -23,6 +23,7 @@ public class LoginImpl implements Login{
     public Boolean authCheck(Member member) {
     
         String name = member.getName();
+        System.out.println(name);
         Optional<Member> presentMember = memberDB.findByName(name);
         
         // Check unique ID

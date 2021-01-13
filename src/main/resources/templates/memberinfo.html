@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xml:lang xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            function plus(){
+                var age = document.getElementById("age").value;
+                var favor = document.getElementById("favor").value;
+                var name = document.getElementById("name").value;
+                console.log(age);
+                console.log(favor);
+                console.log(name);
+
+                var url = "http://localhost:8080/memberinfo";
+
+                const formdata = new FormData();
+                formdata.append("name", name);
+                formdata.append("age", age);
+                formdata.append("favor", favor);
+
+                axios.request({
+                    method : 'POST',
+                    url : url,
+                    data : formdata,
+                })
+                .then(response =>
+                    response.data == 'push' ? location.href="/" : alert("faild..!"))
+                .catch(error => {console.log(error)});
+                
+            }
+        </script>
+        <style>
+            html, body {
+            height : 100%;
+            }
+            body { 
+            display: table;
+            margin: 0 auto;
+            }
+
+            .canvas {
+            border: 1px solid red;
+            height: 100%;
+            display: table-cell;
+            vertical-align: middle;
+            }
+
+            .registerBox{
+            border: 1px solid blue;
+            width: 300px;
+            height: 400px;
+            }
+        </style>        
+    </head>
+    <body>
+    <div class="canvas">
+    <div class="registerBox">
+        <table>
+        <tr>
+            <th colspan="2">Choose your personality!!</th>
+        </tr>
+        <tr>
+            <td colspan="2"><p th:text="${name}"></p>
+            <input type="hidden" id="name" th:value="${name}">
+            </td>
+        </tr>
+        <tr>
+            <td>age :</td>
+            <td><input type="number" min="20" max="99" id="age"></td>
+        </tr>
+        <tr>
+            <td>favor :</td>
+            <td>
+                <select id="favor">
+                    <option value="modern" selected>모던</option>
+                    <option value="romance">로맨스</option>
+                    <option value="avant">아방가르드</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><button onclick="plus()">plus</button></td>
+        </tr>
+        </table>
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xml:lang xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+  body, html {
+  	height : 99%;
+  }
+
+  .lw { font-size: 60px; }
+
+
+  div {
+      border : 1px solid red;
+  }
+  .layout {
+  	width : 100%;
+    height : 100%;
+    display : flex;
+    flex-direction : column;
+  }
+  
+  .loginbox{
+  	width : 350px;
+    height : 400px;
+    float : right;
+  }
+
+  .loginbox > table{
+    text-align: center;
+    border: 1px solid blue;
+  }
+</style>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+/* fetch api -> just call api, not change browser address;
+fetch(url, {
+    method="POST",
+    headers: {"Content-Type":"application/json"},
+    data: JSON.stringify({
+      name: name,
+      password: password,
+    }),
+    }).then((response) => console.log(response))
+   }
+*/
+function signIn(){
+  var name = document.getElementById("name").value;
+  var password = document.getElementById("password").value;
+  var url = "http://localhost:8080/" + "check";
+
+  const formdata = new FormData();
+  formdata.append("name", name);
+  formdata.append("password", password);
+  
+  axios.request({
+    method: 'POST',
+    url: url,
+    data : formdata,
+  })
+  .then( response => 
+      response.data == 'check'? location.href="poemlist" : this.loginFali() )
+  .catch(error => {console.log(error)} );
+
+};
+
+function loginFali(){
+  alert("login is falied")
+};
+
+function register(){
+  location.href="register";
+}
+</script>
+
+</head>
+<body>
+  <div class="layout">
+     <div class="inner" style="flex:1;"></div>
+    <div class="inner" style="height:450px; display : flex;">
+      <div style="border: 1px solid blue; flex:2">
+          image
+        </div>
+        <div class="loginbox" style="flex:3">
+          <table>
+            <tr>
+              <th colspan="2">Login</th>
+            </tr>
+            <tr>
+               <td>ID</td>
+               <td><input type="text" id="name" name="name"></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><input type="password" id="password" name="password"></td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <button onclick="signIn()">Sign in</button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                 <button onclick="register()">Register</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="inner" style="flex:1;"></div>
+  </div>
+</body>
+</html>

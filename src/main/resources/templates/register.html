@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xml:lang xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            function next(){
+                var name = document.getElementById("name").value;
+                var password = document.getElementById("password").value;
+                var url = "http://localhost:8080/sign";
+
+                const formdata = new FormData();
+                formdata.append("name", name);
+                formdata.append("password", password);
+
+                axios.request({
+                    method : 'POST',
+                    url : url,
+                    data : formdata,
+                })
+                .then(response =>
+                    response.data == 'created' ? location.href="memberinfo?name=" + name : alert("faild..!"))
+                .catch(error => {console.log(error)});
+            }
+        </script>
+        <style>
+            html, body {
+            height : 100%;
+            }
+            body { 
+            display: table;
+            margin: 0 auto;
+            }
+
+            .canvas {
+            border: 1px solid red;
+            height: 100%;
+            display: table-cell;
+            vertical-align: middle;
+            }
+
+            .registerBox{
+            border: 1px solid blue;
+            width: 300px;
+            height: 400px;
+            }
+        </style>        
+    </head>
+    <body>
+    <div class="canvas">
+    <div class="registerBox">
+        <table>
+        <tr>
+            <th colspan="2">Welcome to Join us!</th>
+        </tr>
+        <tr>
+            <td>ID :</td>
+            <td><input type="text" id="name" name="name"></td>
+        </tr>
+        <tr>
+            <td>password :</td>
+            <td><input type="password" id="password" name="password"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button onclick="next()">Next</button></td>
+        </tr>
+        </table>
+    </div>
+    </div>
+</body>
+</html>

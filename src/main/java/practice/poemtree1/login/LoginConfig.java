@@ -18,5 +18,6 @@ public class LoginConfig {
     public Login login(){
         return new LoginImpl(memberDB);
     }
+
     
 }
