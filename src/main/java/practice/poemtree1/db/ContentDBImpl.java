@@ -55,6 +55,11 @@ public class ContentDBImpl implements ContentDB {
     }
 
     @Override
+    public List<Content> findAll() {
+        return jdbcTemplate.query("SELECT * FROM CONTENT", contentRowMapper());
+    }
+
+    @Override
     public List<Content> findByPID(String pid) {
         return jdbcTemplate.query("SELECT * FROM CONTENT WHERE PID = ?", contentRowMapper(), pid);
     }
@@ -78,6 +83,7 @@ public class ContentDBImpl implements ContentDB {
             }
         };
     }
+
 
     
 }

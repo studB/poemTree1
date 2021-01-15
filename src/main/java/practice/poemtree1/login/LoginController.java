@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import practice.poemtree1.InfoRepository;
+import practice.poemtree1.PoemRepository;
 import practice.poemtree1.analysis.InfoAdminister;
 import practice.poemtree1.analysis.MemberInfo;
+import practice.poemtree1.db.ContentDB;
 
 //@RestController => Controller + @ResponseBody
 //@ResponseEntity : 데이터와 상태 코드를 동시에 제어 가능
@@ -24,12 +27,13 @@ public class LoginController {
     
     Login login;
     InfoAdminister infoadmin;
-
+    ContentDB contentDB;
 
     @Autowired
-    public LoginController(Login login, InfoAdminister infoAdmin){
+    public LoginController(Login login, InfoAdminister infoAdmin, ContentDB contentDB){
         this.login = login;
         this.infoadmin = infoAdmin;
+        this.contentDB = contentDB;
     }
 
     @GetMapping("/")
@@ -56,8 +60,17 @@ public class LoginController {
     }
 
     @GetMapping("/poemlist")
-    public String poemlist(){
-        return "poemlist";
+    public String poemlist(@RequestParam("name") String name, Model model){
+        model.addAttribute("name", name);
+        // Set Poem repository
+        PoemRepository PR = PoemRepository.getInstance();
+        PR.setPR(contentDB.findAll());
+        
+        InfoRepository IR = InfoRepository.getInstance();
+        IR.setName(name);
+        IR.setPid(infoadmin.findPIDByName(name));
+
+        return "redirect:/page?num=0";
     }
 
     @GetMapping("/register")

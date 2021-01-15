@@ -1,9 +1,86 @@
 <!DOCTYPE HTML>
 <html xml:lang xmlns:th="http://www.thymeleaf.org">
 <head>
-    <body>
-        <div>
-            List of poem
-        </div>
-    </body>
+    <style>
+        html, body {
+  height : 100%;
+}
+body { 
+width: 90%;
+margin: 0 auto;
+border : 1px solid black;
+display: flex;
+flex-direction: column;
+}
+
+div {
+  border: 1px solid red;
+}
+
+#contentBox{
+  height: 300px;
+  table-layout: fixed;
+  border: 1px solid blue;
+}
+
+.contentCell{
+  border: 1px solid gray;
+  width: 33%;
+  word-break: break-all;
+}
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+
+        var paging = function(){
+          axios.request({
+            method : "GET",
+            url : "http://localhost:8080/len",
+          })
+          .then(response => {
+            var pagebox = document.getElementById("paging");
+            for(var i = 0; i< response.data; i++){
+              var page = document.createElement("a");
+              page.innerText = 1;
+              page.setAttribute("id", "page" + i);
+              page.setAttribute("href", "page?num=" + i);
+              pagebox.appendChild(page);
+            }
+          })
+          .catch(error => console.log(error));
+        }
+
+        function myPage(){
+          location.href = "write";
+        }
+
+    </script>
+
 </head>
+<body>
+  <div style="flex:1">
+   <div th:text="${name}"></div>
+   <button onclick="myPage()">myPage</button>
+  </div>
+    <table id="contentBox">
+      <tr>
+        <td class="contentCell" id="content1">
+          <p th:text="${author1}"></p>
+          <p th:text="${title1}"></p>
+        </td>
+        <td class="contentCell" id="content2">
+        </td>
+        <td class="contentCell" id="content3">
+        </td>
+      </tr>
+    </table>
+  <div style="flex:1">
+    <div id="paging"></div>
+  </div>
+</body>
+<script>
+
+    paging();
+
+</script>
+</html>

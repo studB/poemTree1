@@ -39,5 +39,11 @@ public class InfoAdministerImpl implements InfoAdminister {
         List<String> result = memberInfoDB.getColumnAge();
         return result;
     }
+
+    @Override
+    public String findPIDByName(String name) {
+        Optional<MemberInfo> memberInfo = memberInfoDB.findByName(name);
+        return memberInfo.get().getPid();
+    }
     
 }

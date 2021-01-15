@@ -122,4 +122,13 @@ public class DBTest {
         Assertions.assertThat(contentDB.findByTitle("title")).isEmpty();
 
     }
+
+    @Test
+    void contentAll(){
+        List<Content> cl;
+        ContentDB contentDB = ac.getBean("contentDB", ContentDB.class);
+        cl = contentDB.findAll();
+
+        Assertions.assertThat(cl.size()).isGreaterThan(0);
+    }
 }

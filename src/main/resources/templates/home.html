@@ -59,7 +59,7 @@ function signIn(){
     data : formdata,
   })
   .then( response => 
-      response.data == 'check'? location.href="poemlist" : this.loginFali() )
+      response.data == 'check'? location.href="poemlist?name="+name : this.loginFali() )
   .catch(error => {console.log(error)} );
 
 };

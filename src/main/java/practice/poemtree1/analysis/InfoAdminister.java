@@ -12,4 +12,6 @@ public interface InfoAdminister {
 
     List<String> getAges();
 
+	String findPIDByName(String name);
+
 }
