@@ -32,4 +32,9 @@ public class InfoRepository {
         this.pid = pid;
     }
 
+    public void clear(){
+        this.pid = null;
+        this.name = null;
+    }
+
 }

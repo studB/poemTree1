@@ -27,5 +27,9 @@ public class PoemRepository {
     public int getIen(){
         return this.poemInfo.size();
     }
+
+    public void clear(){
+        this.poemInfo = null;
+    }
 }
 

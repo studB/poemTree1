@@ -20,5 +20,5 @@ public interface ContentDB {
     List<Content> findAll();
     List<Content> findByPID(String pid); 
     Optional<Content> findByTitle(String title);
-
+    Optional<Content> findByPnum(int pnum);
 }

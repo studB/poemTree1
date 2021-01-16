@@ -31,8 +31,8 @@ public class ContentDBImpl implements ContentDB {
 
     @Override
     public void insertRow(Content content) {
-        jdbcTemplate.update("INSERT INTO CONTENT VALUES(?,?,?,?)", 
-            content.getPnum(), content.getPid(), content.getTitle(), content.getPoem());
+        jdbcTemplate.update("INSERT INTO CONTENT(PID, TITLE, POEM) VALUES(?,?,?)", 
+            content.getPid(), content.getTitle(), content.getPoem());
 
     }
 
@@ -67,6 +67,12 @@ public class ContentDBImpl implements ContentDB {
     @Override
     public Optional<Content> findByTitle(String title) {
         List<Content> result = jdbcTemplate.query("SELECT * FROM CONTENT WHERE TITLE = ?", contentRowMapper(), title);
+        return result.stream().findAny();
+    }
+
+    @Override
+    public Optional<Content> findByPnum(int pnum) {
+        List<Content> result = jdbcTemplate.query("SELECT * FROM CONTENT WHERE pnum = ?", contentRowMapper(), pnum);
         return result.stream().findAny();
     }
 
